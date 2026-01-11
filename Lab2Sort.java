@@ -1,27 +1,14 @@
-import java.util.Scanner;
+import java.util.*;
 
-class Lab2Sort {
+class Lab2FrameSorting {
 
-    static class Frame {
-        int fnum;
-        String content;
+    static class Packet {
+        int seq;
+        String data;
 
-        Frame(int fnum, String content) {
-            this.fnum = fnum;
-            this.content = content;
-        }
-    }
-
-    // Bubble sort to sort frames by frame number
-    static void sortFrames(Frame[] F, int n) {
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (F[j].fnum > F[j + 1].fnum) {
-                    Frame temp = F[j];
-                    F[j] = F[j + 1];
-                    F[j + 1] = temp;
-                }
-            }
+        Packet(int seq, String data) {
+            this.seq = seq;
+            this.data = data;
         }
     }
 
@@ -29,29 +16,48 @@ class Lab2Sort {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter number of frames: ");
-        int n = sc.nextInt();
+        System.out.print("Enter the message: ");
+        String message = sc.nextLine();
 
-        Frame[] F = new Frame[n];
+        System.out.print("Enter packet size: ");
+        int size = sc.nextInt();
 
-        System.out.println("Enter frame number and content:");
-        for (int i = 0; i < n; i++) {
-            int num = sc.nextInt();
-            String cont = sc.next();
-            F[i] = new Frame(num, cont);
+        // Divide message into packets
+        List<Packet> packets = new ArrayList<>();
+        int seq = 0;
+
+        for (int i = 0; i < message.length(); i += size) {
+            String part = message.substring(i,
+                    Math.min(i + size, message.length()));
+            packets.add(new Packet(seq++, part));
         }
 
-        System.out.println("\nBefore Sorting:");
-        for (int i = 0; i < n; i++) {
-            System.out.print(F[i].content + " ");
+        // Shuffle packets to simulate out-of-order reception
+        Collections.shuffle(packets);
+
+        // Display received packets (shuffled)
+        System.out.println("\nPackets received (shuffled):");
+        for (Packet p : packets) {
+            System.out.println("Seq " + p.seq + " : " + p.data);
         }
 
-        sortFrames(F, n);
+        // Sort packets by sequence number
+        packets.sort(Comparator.comparingInt(p -> p.seq));
 
-        System.out.println("\n\nAfter Sorting:");
-        for (int i = 0; i < n; i++) {
-            System.out.print(F[i].content + " ");
+        // Display sorted packets
+        System.out.println("\nPackets after sorting:");
+        for (Packet p : packets) {
+            System.out.println("Seq " + p.seq + " : " + p.data);
         }
+
+        // Reassemble message
+        StringBuilder reassembled = new StringBuilder();
+        for (Packet p : packets) {
+            reassembled.append(p.data);
+        }
+
+        System.out.println("\nReassembled Message:");
+        System.out.println(reassembled.toString());
 
         sc.close();
     }

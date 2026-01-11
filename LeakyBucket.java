@@ -1,8 +1,10 @@
 import java.util.Scanner;
 
-public class LeakyBucket {
+public class LeakyBucket 
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
 
         Scanner sc = new Scanner(System.in);
 
@@ -17,7 +19,8 @@ public class LeakyBucket {
 
         int[] packetSize = new int[numPackets];
         System.out.println("Enter packet sizes:");
-        for (int i = 0; i < numPackets; i++) {
+        for (int i = 0; i < numPackets; i++) 
+        {
             packetSize[i] = sc.nextInt();
         }
 
@@ -25,16 +28,20 @@ public class LeakyBucket {
 
         System.out.println("\nPacket\tBucket\tSent\tRemaining\tStatus");
 
-        for (int i = 0; i < numPackets; i++) {
+        for (int i = 0; i < numPackets; i++) 
+        {
 
             // Check if packet can be added
-            if (currentBucket + packetSize[i] <= bucketCapacity) {
+            if (currentBucket + packetSize[i] <= bucketCapacity) 
+            {
                 currentBucket += packetSize[i];
                 System.out.print(packetSize[i] + "\t" + currentBucket + "\t");
                 System.out.print(Math.min(outputRate, currentBucket) + "\t");
                 currentBucket -= Math.min(outputRate, currentBucket);
                 System.out.println(currentBucket + "\t\tAccepted");
-            } else {
+            } 
+            else 
+            {
                 System.out.print(packetSize[i] + "\t" + currentBucket + "\t");
                 System.out.print(Math.min(outputRate, currentBucket) + "\t");
                 currentBucket -= Math.min(outputRate, currentBucket);

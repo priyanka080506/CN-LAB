@@ -1,13 +1,16 @@
 import java.util.*;
 
-public class Lab9RED{
-        public static class RandomEarlyDetection{
+public class Lab9RED
+{
+        public static class RandomEarlyDetection
+        {
                 private double minThreshold;
                 private double maxThreshold;
                 private double maxDropProb;
                 private int queueSize;
                 private int currentQueue;
-                public RandomEarlyDetection(double min, double max, double prob, int size){
+                public RandomEarlyDetection(double min, double max, double prob, int size)
+                {
                         minThreshold = min;
                         maxThreshold = max;
                         maxDropProb = prob;
@@ -15,13 +18,16 @@ public class Lab9RED{
                         currentQueue = 0;
                 }
 
-                public boolean enqueue(){
-                        if(currentQueue >= queueSize){
+                public boolean enqueue()
+                {
+                        if(currentQueue >= queueSize)
+                        {
                                 System.out.println("Packet dropped (Quue FUll) ");
                                 return false;
                         }
                         double dropProb = calcDropProb();
-                        if(dropProb > 0 && shouldDrop(dropProb)){
+                        if(dropProb > 0 && shouldDrop(dropProb))
+                        {
                                 System.out.println("Packet Dropped (RED)");
                                 return false;
                         }
@@ -30,7 +36,8 @@ public class Lab9RED{
                         return true;
                 }
 
-                private double calcDropProb(){
+                private double calcDropProb()
+                {
                         if(currentQueue < minThreshold)
                                 return 0.0;
                         else if(currentQueue >= maxThreshold)
@@ -38,12 +45,14 @@ public class Lab9RED{
                                 else return maxDropProb * ((currentQueue-minThreshold)/(maxThreshold - minThreshold));
                 }
 
-                private boolean shouldDrop(double prob){
+                private boolean shouldDrop(double prob)
+                {
                         Random random = new Random();
                         return random.nextDouble() > prob;
                 } //5,10,0.2,15,20
         }
-        public static void main(String[] args){
+        public static void main(String[] args)
+        {
                 Scanner sc = new Scanner(System.in);
                 System.out.print("Enter the minimum threshold: ");
                 double min = sc.nextDouble();
@@ -57,7 +66,8 @@ public class Lab9RED{
                 int n = sc.nextInt();
 
                 RandomEarlyDetection red = new RandomEarlyDetection(min, max, prob, size);
-                for(int i=0; i<n; i++){
+                for(int i=0; i<n; i++)
+                {
                         red.enqueue();
                 }
                 sc.close();

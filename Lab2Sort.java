@@ -1,18 +1,22 @@
 import java.util.*;
 
-class Lab2FrameSorting {
+class Lab2FrameSorting 
+{
 
-    static class Packet {
+    static class Packet 
+    {
         int seq;
         String data;
 
-        Packet(int seq, String data) {
+        Packet(int seq, String data) 
+        {
             this.seq = seq;
             this.data = data;
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
 
         Scanner sc = new Scanner(System.in);
 
@@ -26,7 +30,8 @@ class Lab2FrameSorting {
         List<Packet> packets = new ArrayList<>();
         int seq = 0;
 
-        for (int i = 0; i < message.length(); i += size) {
+        for (int i = 0; i < message.length(); i += size) 
+        {
             String part = message.substring(i,
                     Math.min(i + size, message.length()));
             packets.add(new Packet(seq++, part));
@@ -37,7 +42,8 @@ class Lab2FrameSorting {
 
         // Display received packets (shuffled)
         System.out.println("\nPackets received (shuffled):");
-        for (Packet p : packets) {
+        for (Packet p : packets) 
+        {
             System.out.println("Seq " + p.seq + " : " + p.data);
         }
 
@@ -46,13 +52,15 @@ class Lab2FrameSorting {
 
         // Display sorted packets
         System.out.println("\nPackets after sorting:");
-        for (Packet p : packets) {
+        for (Packet p : packets) 
+        {
             System.out.println("Seq " + p.seq + " : " + p.data);
         }
 
         // Reassemble message
         StringBuilder reassembled = new StringBuilder();
-        for (Packet p : packets) {
+        for (Packet p : packets) 
+        {
             reassembled.append(p.data);
         }
 

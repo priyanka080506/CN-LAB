@@ -3,12 +3,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 // RSA Algorithm Class
-class RSAAlgorithm {
+class RSAAlgorithm 
+{
 
     BigInteger e, d, n;
 
     // Key generation
-    void generateKeys(int bitLength) {
+    void generateKeys(int bitLength) 
+    {
 
         Random r = new Random();
         BigInteger p = BigInteger.probablePrime(bitLength, r);
@@ -19,7 +21,8 @@ class RSAAlgorithm {
                           .multiply(q.subtract(BigInteger.ONE));
 
         e = BigInteger.probablePrime(bitLength / 2, r);
-        while (!phi.gcd(e).equals(BigInteger.ONE) || e.compareTo(phi) >= 0) {
+        while (!phi.gcd(e).equals(BigInteger.ONE) || e.compareTo(phi) >= 0) 
+        {
             e = BigInteger.probablePrime(bitLength / 2, r);
         }
 
@@ -27,20 +30,24 @@ class RSAAlgorithm {
     }
 
     // Encryption: C = M^e mod n
-    BigInteger encrypt(BigInteger message) {
+    BigInteger encrypt(BigInteger message) 
+    {
         return message.modPow(e, n);
     }
 
     // Decryption: M = C^d mod n
-    BigInteger decrypt(BigInteger cipher) {
+    BigInteger decrypt(BigInteger cipher) 
+    {
         return cipher.modPow(d, n);
     }
 }
 
 // Main Class
-public class Lab7RSA {
+public class Lab7RSA 
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
 
         RSAAlgorithm rsa = new RSAAlgorithm();
         rsa.generateKeys(512);
